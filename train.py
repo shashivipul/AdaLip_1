@@ -192,7 +192,9 @@ else:
     rsgnn = RSGNN(model, args, device)
     if args.two_stage=="y":
         adj_new = rsgnn.fit(features, perturbed_adj)
+        t_total=time.time()
         model.fit(features, adj_new, labels, idx_train, idx_val, verbose=False, train_iters=args.epochs,bound=args.bound) #######
+        print('\n Total Time = ',time.time()-t_total)
         model.test(idx_test)
     else:
         rsgnn.fit(features, perturbed_adj, labels, idx_train, idx_val)
